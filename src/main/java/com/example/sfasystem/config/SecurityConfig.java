@@ -58,11 +58,15 @@ public class SecurityConfig {
 						.anyRequest().authenticated())
 				.formLogin(login -> login
 						.loginPage("/login")
-						.defaultSuccessUrl("/students")
+						.defaultSuccessUrl("/students", true)
 						.permitAll())
 				.logout(logout -> logout
+						.invalidateHttpSession(true)
+						.deleteCookies("JSESSIONID")
 						.logoutSuccessUrl("/login")
-						.permitAll());
+						.permitAll())
+				.sessionManagement(session -> session
+						.invalidSessionUrl("/login"));
 		return http.build();
 	}
 }
