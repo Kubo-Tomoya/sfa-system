@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)">
+<head>
+	<meta charset="UTF-8">
+	<title th:replace="${title}">タイトル</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- ナビゲーションバー -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/students">SFAシステム</a>
+			<div class="navbar-nav ms-auto">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit" class="btn btn-outline-light btn-sm">
+						ログアウト
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<!-- メインコンテンツ -->
+	<div class="container mt-4">
+		<th:block th:replace="${content}" />
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+	</script>
+</body>
+</html>
