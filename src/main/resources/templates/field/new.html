@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>現場新規登録</title>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- ナビゲーションバー -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/students">SFAシステム</a>
+			<div class="navbar-nav ms-auto">
+				<a class="nav-link text-white" href="/students">生徒管理</a>
+				<a class="nav-link text-white" href="/curriculums">カリキュラム管理</a>
+				<a class="nav-link text-white" href="/fields">現場管理</a>
+				<form th:action="@{/logout}" method="post" class="ms-2">
+					<button type="submit" class="btn btn-outline-light btn-sm">
+						ログアウト
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-4">
+		<h1 class="h3 mb-4">現場新規登録</h1>
+
+		<form th:action="@{/fields/create}" th:object="${fieldForm}" method="post">
+			<div class="row">
+				<!-- 現場コード -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">現場コード <span
+						class="text-danger">*</span></label>
+					<input type="text" th:field="*{fieldCode}" class="form-control"
+						th:classappend="${#fields.hasErrors('fieldCode')} ? 'is-invalid'">
+					<div class="invalid-feedback" th:errors="*{fieldCode}"></div>
+				</div>
+
+				<!-- 現場名 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">現場名 <span class="text-danger">*</span></label>
+					<input type="text" th:field="*{name}" class="form-control"
+						th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+					<div class="invalid-feedback" th:errors="*{name}"></div>
+				</div>
+
+				<!-- クライアント名 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">クライアント名</label>
+					<input type="text" th:field="*{clientName}" class="form-control"
+						th:classappend="${#fields.hasErrors('clientName')} ? 'is-invalid'">
+					<div class="invalid-feedback" th:errors="*{clientName}"></div>
+				</div>
+
+				<!-- 業界 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">業界</label>
+					<input type="text" th:field="*{industry}" class="form-control"
+						th:classappend="${#fields.hasErrors('industry')} ? 'is-invalid'">
+					<div class="invalid-feedback" th:errors="*{industry}"></div>
+				</div>
+
+				<!-- 勤務地 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">勤務地</label>
+					<input type="text" th:field="*{location}" class="form-control"
+						th:classappend="${#fields.hasErrors('location')} ? 'is-invalid'">
+					<div class="invalid-feedback" th:errors="*{location}"></div>
+				</div>
+
+				<!-- 必要スキル -->
+				<div class="col-md-12 mb-3">
+					<label class="form-label">必要スキル</label>
+					<textarea th:field="*{requiredSkills}" class="form-control"
+						rows="3"></textarea>
+				</div>
+
+				<!-- 現場説明 -->
+				<div class="col-md-12 mb-3">
+					<label class="form-label">現場説明</label>
+					<textarea th:field="*{description}" class="form-control"
+						rows="3"></textarea>
+				</div>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="submit" class="btn btn-primary">登録</button>
+				<a href="/fields" class="btn btn-secondary">戻る</a>
+			</div>
+		</form>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+	</script>
+</body>
+</html>
