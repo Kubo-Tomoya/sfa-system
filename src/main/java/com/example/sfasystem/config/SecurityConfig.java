@@ -49,7 +49,7 @@ public class SecurityConfig {
 						.anyRequest().authenticated())
 				.formLogin(login -> login
 						.loginPage("/login")
-						.defaultSuccessUrl("/students", true)
+						.defaultSuccessUrl("/home", true)
 						.permitAll())
 				.logout(logout -> logout
 						.invalidateHttpSession(true)
