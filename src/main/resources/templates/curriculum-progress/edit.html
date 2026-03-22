@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>カリキュラム進捗編集</title>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- ナビゲーションバー -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/home">SFAシステム</a>
+			<div class="navbar-nav ms-auto">
+				<a class="nav-link text-white" href="/students">生徒管理</a>
+				<a class="nav-link text-white" href="/curriculums">カリキュラム管理</a>
+				<a class="nav-link text-white" href="/fields">現場管理</a>
+				<a class="nav-link text-white" href="/assignments">配属管理</a>
+				<a class="nav-link text-white" href="/curriculum-progresses">進捗管理</a>
+				<form th:action="@{/logout}" method="post" class="ms-2">
+					<button type="submit" class="btn btn-outline-light btn-sm">
+						ログアウト
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-4">
+		<h1 class="h3 mb-4">カリキュラム進捗編集</h1>
+
+		<form th:action="@{/curriculum-progresses/{id}/update(id=${id})}"
+			th:object="${curriculumProgressForm}" method="post">
+			<div class="row">
+				<!-- 生徒 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">生徒 <span class="text-danger">*</span></label>
+					<select th:field="*{studentId}" class="form-select"
+						th:classappend="${#fields.hasErrors('studentId')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option th:each="student : ${students}"
+							th:value="${student.id}"
+							th:text="${student.lastName + ' ' + student.firstName}">
+						</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{studentId}"></div>
+				</div>
+
+				<!-- カリキュラム -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">カリキュラム <span class="text-danger">*</span></label>
+					<select th:field="*{curriculumId}" class="form-select"
+						th:classappend="${#fields.hasErrors('curriculumId')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option th:each="curriculum : ${curriculums}"
+							th:value="${curriculum.id}"
+							th:text="${curriculum.name}">
+						</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{curriculumId}"></div>
+				</div>
+
+				<!-- 進捗ステータス -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">進捗ステータス <span class="text-danger">*</span></label>
+					<select th:field="*{status}" class="form-select"
+						th:classappend="${#fields.hasErrors('status')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option value="1">未着手</option>
+						<option value="2">進行中</option>
+						<option value="3">停滞</option>
+						<option value="4">完了</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{status}"></div>
+				</div>
+
+				<!-- 開始日 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">開始日</label>
+					<input type="date" th:field="*{startDate}" class="form-control">
+				</div>
+
+				<!-- 現在ステップ -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">現在ステップ</label>
+					<input type="number" th:field="*{currentStep}" class="form-control">
+				</div>
+
+				<!-- 最終アクセス日時 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">最終アクセス日時</label>
+					<input type="datetime-local" th:field="*{lastAccessedAt}"
+						class="form-control">
+				</div>
+
+				<!-- 完了日 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">完了日</label>
+					<input type="datetime-local" th:field="*{completionDate}"
+						class="form-control">
+				</div>
+
+				<!-- 遅延理由 -->
+				<div class="col-md-12 mb-3">
+					<label class="form-label">遅延理由</label>
+					<textarea th:field="*{delayReason}" class="form-control"
+						rows="3"></textarea>
+				</div>
+
+				<!-- メンターコメント -->
+				<div class="col-md-12 mb-3">
+					<label class="form-label">メンターコメント</label>
+					<textarea th:field="*{mentorComment}" class="form-control"
+						rows="3"></textarea>
+				</div>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="submit" class="btn btn-primary">更新</button>
+				<a href="/curriculum-progresses" class="btn btn-secondary">戻る</a>
+			</div>
+		</form>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+	</script>
+</body>
+</html>
