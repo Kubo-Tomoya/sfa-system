@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>状況ログ新規登録</title>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- ナビゲーションバー -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/home">SFAシステム</a>
+			<div class="navbar-nav ms-auto">
+				<a class="nav-link text-white" href="/students">生徒管理</a>
+				<a class="nav-link text-white" href="/curriculums">カリキュラム管理</a>
+				<a class="nav-link text-white" href="/fields">現場管理</a>
+				<a class="nav-link text-white" href="/assignments">配属管理</a>
+				<a class="nav-link text-white" href="/curriculum-progresses">進捗管理</a>
+				<a class="nav-link text-white" href="/status-logs">状況ログ</a>
+				<form th:action="@{/logout}" method="post" class="ms-2">
+					<button type="submit" class="btn btn-outline-light btn-sm">
+						ログアウト
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-4">
+		<h1 class="h3 mb-4">状況ログ新規登録</h1>
+
+		<form th:action="@{/status-logs/create}" th:object="${statusLogForm}"
+			method="post">
+			<div class="row">
+				<!-- 生徒 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">生徒 <span class="text-danger">*</span></label>
+					<select th:field="*{studentId}" class="form-select"
+						th:classappend="${#fields.hasErrors('studentId')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option th:each="student : ${students}"
+							th:value="${student.id}"
+							th:text="${student.lastName + ' ' + student.firstName}">
+						</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{studentId}"></div>
+				</div>
+
+				<!-- 現場 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">現場 <span class="text-danger">*</span></label>
+					<select th:field="*{fieldId}" class="form-select"
+						th:classappend="${#fields.hasErrors('fieldId')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option th:each="field : ${fields}"
+							th:value="${field.id}"
+							th:text="${field.name}">
+						</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{fieldId}"></div>
+				</div>
+
+				<!-- 管理者 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">管理者 <span class="text-danger">*</span></label>
+					<select th:field="*{adminId}" class="form-select"
+						th:classappend="${#fields.hasErrors('adminId')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option th:each="admin : ${admins}"
+							th:value="${admin.id}"
+							th:text="${admin.username}">
+						</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{adminId}"></div>
+				</div>
+
+				<!-- 稼働ステータス -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">稼働ステータス <span class="text-danger">*</span></label>
+					<select th:field="*{status}" class="form-select"
+						th:classappend="${#fields.hasErrors('status')} ? 'is-invalid'">
+						<option value="">選択してください</option>
+						<option value="1">稼働中</option>
+						<option value="2">待機</option>
+					</select>
+					<div class="invalid-feedback" th:errors="*{status}"></div>
+				</div>
+
+				<!-- 業務負荷 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">業務負荷</label>
+					<select th:field="*{workloadLevel}" class="form-select">
+						<option value="">選択してください</option>
+						<option value="1">低</option>
+						<option value="2">中</option>
+						<option value="3">高</option>
+					</select>
+				</div>
+
+				<!-- 評価 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">評価</label>
+					<select th:field="*{performanceEvaluation}" class="form-select">
+						<option value="">選択してください</option>
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+					</select>
+				</div>
+
+				<!-- 記録日時 -->
+				<div class="col-md-6 mb-3">
+					<label class="form-label">記録日時</label>
+					<input type="datetime-local" th:field="*{recordedAt}"
+						class="form-control">
+				</div>
+
+				<!-- コメント -->
+				<div class="col-md-12 mb-3">
+					<label class="form-label">コメント</label>
+					<textarea th:field="*{comment}" class="form-control"
+						rows="3"></textarea>
+				</div>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="submit" class="btn btn-primary">登録</button>
+				<a href="/status-logs" class="btn btn-secondary">戻る</a>
+			</div>
+		</form>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+	</script>
+</body>
+</html>
